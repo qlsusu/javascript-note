@@ -1,0 +1,128 @@
+-----------------------------几种函数形式：
+function print(s) {
+  console.log(s);
+}
+说明：
+	print是一个变量，其指向一个函数对象
+	s的作用域为 print方法，其为函数的内部变量
+等同于：
+var print = function(s) {
+  console.log(s);
+};
+可以使用print来访问该函数，如：print('bill')
+
+另外一种形式：
+var print = function print() {...};
+
+-----------------------------如果一个函数被多次定义，则最后一个 覆盖 之前的，如：
+function f() {
+  console.log(1);
+}
+f() // 2，注意：此刻，就使用 之下函数的实现了
+function f() {
+  console.log(2);
+}
+f() // 2
+
+-----------------------------函数声明中，不指明返回值，如：
+function add(x, y) {
+  return x + y;
+}
+
+-----------------------------递归调用：
+function fib(num) {
+  if (num === 0) return 0;
+  if (num === 1) return 1;
+  return fib(num - 2) + fib(num - 1);
+}
+fib(6) // 8
+
+-----------------------------特殊属性：
+name
+	var f2 = function () {};
+	f2.name // "f2"
+length
+	function f(a, b) {}
+	f.length // 2：入参的个数
+toString
+	function f() {
+	  a();
+	  b();
+	  c();
+	}
+	f.toString() //代表着函数的源码，包含了 其内部的代码注释
+	// function f() {
+	//  a();
+	//  b();
+	//  c();
+	// }
+
+-----------------------------函数1作为参数 传递给 函数2
+var a;
+
+var x = function () {
+  console.log(a);
+};
+
+function y(f) {
+  a = 2;
+  f();
+}
+
+y(x)
+
+-----------------------------在调用函数时，可以传递 不同于 函数签名中的参数 的参数（如：不同的参数个数等）
+function f(a, b) {
+  return a;
+}
+
+f(1, 2, 3) // 1
+f(1) // 1
+f() // undefined
+
+f.length // 2
+
+-----------------------------arguments
+其为对象，并不是数组（虽然其拥有正确的length属性）
+
+-----------读取外部传递进来的参数
+var f = function (one) {
+  console.log(arguments[0]);
+  console.log(arguments[1]);
+  console.log(arguments[2]);
+  console.log(arguments.length);
+}
+
+f(1, 2, 3)
+// 1
+// 2
+// 3
+// 3
+
+-----------修改外部传递进来的参数
+var f = function(a, b) {
+  // 'use strict'; // 开启严格模式 如果开启了严格模式，修改arguments是无效的，即是：结果为 2
+  arguments[0] = 3;
+  arguments[1] = 2;
+  return a + b;
+}
+
+f(1, 1) // 5
+
+-----------找到原函数（通过callee属性）
+var f = function () {
+  console.log(arguments.callee === f);
+}
+
+f() // true
+
+-----------------------------立刻执行
+当定义了一个函数后，希望立刻执行，该如何：
+()代表执行该函数
+则 在定义一个函数 之后，加上()，就代表执行该函数
+错误的方式：function(){ /* code */ }();
+	为什么：function为行首的话，代表：定义一个函数
+正确的方式：
+	(function(){ /* code */ })();
+	(function(){ /* code */ }());
+	var s=function(){...}();

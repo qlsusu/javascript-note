@@ -1,0 +1,34 @@
+function f1() {
+  var n = 999;
+  function f2() {
+    console.log(n);
+  }
+  return f2;
+}
+
+var result = f1();
+result(); // 999
+
+由于n是在f1中定义，则外部是无法访问n
+而f2在f1中定义，则f2可以访问 其外部（f1）定义的变量
+当f1向外部返回了f2，则外部可通过f2访问 f1内部定义的变量n，即是：f2是连接 f1和外部 的桥梁
+此时，f2称为闭包：是这样一个函数：能够读取 外部函数的内部变量
+
+-------------------------------让函数作用域内的变量一直待在内存中
+function createIncrementor(start) {
+  return function () {
+    return start++;
+  };
+}
+
+var inc = createIncrementor(5);
+
+inc() // 5
+inc() // 6
+inc() // 7
+
+为什么start会一直待在内存中：
+创建了匿名function对象：当执行createIncrementor方法时
+其作用域为 createIncrementor方法域
+只要createIncrementor所指向的对象一直存在，该匿名function对象就一直存在，
+而该函数内部，又在使用 外层函数的start，则start会一直存在于内存中

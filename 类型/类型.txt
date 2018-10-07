@@ -1,0 +1,39 @@
+有哪些类型：
+number
+	整数和小数（比如1和3.14）
+	所有数字都是以64位浮点数形式储存，即使整数也是如此，所以 1 和 1.0 是相等的
+	注意：
+	0.1 + 0.2 === 0.3 // false
+	0.3 / 0.1 // 2.9999999999999996
+	(0.3 - 0.2) === (0.2 - 0.1) // false
+string
+	举例：
+		'abc'
+		"abc"
+		'key = "value"'
+		"It's a long journey"
+		'Did she say \'Hello\'?'
+		"Did she say \"Hello\"?"
+		'Long ' + 'long '
+	不可变：
+		var s = 'hello';
+		s[1] = 'a';
+		s // "hello"
+boolean
+	当为以下值时，为false，其余为true：
+	undefined
+	null
+	false
+	0
+	NaN
+	""或''（空字符串）
+undefined
+	undefined可认为是被废弃
+	由于历史原因，还存在着
+null
+object
+	狭义的对象（object）
+	数组（array）
+	函数（function）
+		var f=function(){...}
+		function f(){...}

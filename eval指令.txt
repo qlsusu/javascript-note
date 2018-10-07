@@ -1,0 +1,22 @@
+参见：
+函数 - JavaScript 教程 - 网道 - eval 命令
+	https://wangdoc.com/javascript/types/function.html#eval-%E5%91%BD%E4%BB%A4
+
+eval命令接受一个字符串作为参数，并将这个字符串当作语句执行，如：	
+eval('var a = 1;');
+a // 1
+
+当使用严格模式时，eval内部定义的变量，外部是看不见的：
+(function f() {
+  'use strict';
+  eval('var foo = 123');
+  console.log(foo);  // ReferenceError: foo is not defined
+})()
+
+当使用严格模式时，eval还是可以访问外部变量：
+(function f() {
+  'use strict';
+  var foo = 1;
+  eval('foo = 2');
+  console.log(foo);  // 2
+})()

@@ -1,0 +1,17 @@
+typeof(a)告诉：a是什么类型，如：
+
+typeof 123 // "number"
+typeof '123' // "string"
+typeof false // "boolean"
+
+function f() {}
+typeof f // "function"
+
+typeof undefined // "undefined"
+v
+typeof v // "undefined"
+
+typeof window // "object"
+typeof {} // "object"
+typeof [] // "object"
+typeof null // "object"
