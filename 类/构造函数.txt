@@ -1,0 +1,17 @@
+有什么用：
+参照于该函数来构建一个对象
+
+例子：
+var Vehicle = function () {
+  //使用严苛模式，则：外部在构建对象时，如果忘记写new，则直接抛错
+  'use strict';
+  this.price = 1000;
+  
+  //如果return的不是一个对象，那么忽略该return
+  //return 1000;
+  
+  //如果return的是个对象，那么最终将返回该对象
+  //return { price: 2000 };
+};
+
+

@@ -1,0 +1,31 @@
+var o = {
+    f: function () {console.log(this);},
+}
+function f2(){console.log(this);}
+
+f在执行时，this一定是o吗？
+	一个反例：var method=o.f; method();
+	此时，this就是window（而不是o）
+f2在执行时，this就一定是全局对象吗？
+	一个反例：o.method=f2; o.method();
+	此时，this就是o（而不是window）
+
+当我们要求f中this一定要是对象myObj时，我们可以使用：
+	f.call(myObj,方法参数,,,) 或者 
+	f.apply(myObj,[方法参数,,,])
+
+如果第一个参数（指明对象）为null，则默认为 全局对象window
+	
+但是也一定要注意：
+call/apply的作用仅仅是：函数内部的this 为 指定对象
+参见之下一个容易混淆的例子：
+	var obj = {};
+	// 覆盖掉继承的 hasOwnProperty 方法
+	obj.hasOwnProperty = function () {
+	  return true;
+	};
+	obj.hasOwnProperty('f1') // true
+	// false
+	//为啥不是true：
+	//调用的是 prototype的hasOwnProperty 方法（而不是自身的hasOwnProperty方法），仅仅告诉该方法内部：this 为 obj
+	Object.prototype.hasOwnProperty.call(obj, 'f1')

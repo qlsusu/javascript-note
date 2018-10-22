@@ -64,9 +64,16 @@ var x = function () {
   console.log(a);
 };
 
+function z() {
+  console.log(this)
+}
+
 function y(f) {
   a = 2;
+  //函数y内部访问了变量f，()代表着进行函数调用
+  //需要注意：函数y内部可以访问什么变量：函数y内部定义的局部变量，全局变量，this.xxx
   f();
+  z();
 }
 
 y(x)
@@ -126,3 +133,28 @@ f() // true
 	(function(){ /* code */ })();
 	(function(){ /* code */ }());
 	var s=function(){...}();
+	
+-----------------------------无论 函数定义 写在哪里，本质上，都位于顶端
+var o = {
+  f1: function () {
+    console.log(this);
+    var f2 = function () {
+      console.log(this);
+    }();
+  }
+}
+相当于：
+var temp = function () {
+  console.log(this);
+};
+var o = {
+  f1: function () {
+    console.log(this);
+    var f2 = temp();
+  }
+}
+
+-----------------------------函数对象的原型
+function f(){}
+//或者，var f=function(){}
+f.__proto__ == Function.prototype

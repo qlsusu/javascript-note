@@ -1,0 +1,94 @@
+this是什么：
+函数/变量 属于谁？
+如果是xx对象，则this为xx对象
+否则，this为全局对象window
+
+-----------------------------例子
+var Obj = function (p) {
+  this.p = p;
+};
+//构造函数中，this为 new出来的对象，new本质上：新创建一个对象context，后constructor.apply(context, args)
+var o = new Obj('Hello World!');
+o.p // "Hello World!"
+
+-----------------------------手动为函数传递this
+function f() {
+    return this.name;
+}
+
+var bill={
+    name:"bill",
+};
+
+f.apply(bill);	//bill
+
+-----------------------------例子
+function f() {
+  return '姓名：'+ this.name;
+}
+
+var A = {
+  name: '张三',
+  describe: f
+};
+
+A.describe() // "姓名：张三"
+
+-----------------------------例子
+var A = {
+  name: '张三',
+  describe: function () {
+    return '姓名：'+ this.name;
+  }
+};
+
+var name = '李四';
+var f = A.describe;
+//注意：谁在调用describe，有xx.f()吗
+// this代表了 全局环境：this == window
+f() // "姓名：李四"
+
+-----------------------------例子
+var o = {
+    f1: function () {
+		//this==o
+        console.log(this);
+		
+        function f2() {
+			//this==window
+            console.log(this);
+        };
+		//注意：f2是属于对象o吗
+        f2();
+    }
+}
+o.f1();
+
+-----------------------------如果想访问对象的成员，那么请不要 忽略使用 this；要注意：并不是成员函数中的this就一定是 定义该函数的对象
+var o = {
+    v: 'hello',
+    p: [ 'a1', 'a2' ],
+    f: function f() {
+		//必须使用this.forItem，而不能用forItem
+		//因为forItem这个变量是在哪里定义的呢？：局部？全局？
+        this.p.forEach(this.forItem);
+    },
+    forItem: function (item) {
+		//不能使用this.v，试想下：forItem()在什么地方被调用（forEach是Array定义的方法）
+        console.log(o.v+' ' + item);
+    },
+}
+o.f()
+
+-----------------------------使用that
+var o = {
+  f1: function() {    
+    var that = this;
+    var f2 = function() {
+      //this是全局对象window
+	  //that并不是全局对象window了，而是o
+      console.log(that);
+    }();
+  }
+}
+o.f1()

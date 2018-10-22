@@ -1,0 +1,2 @@
+NaN 全拼为：Not a Number
+即是：非数值

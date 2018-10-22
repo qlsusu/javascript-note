@@ -1,0 +1,13 @@
+var counter = {
+  count: 0
+};
+counter.inc = function () {
+  'use strict';
+  this.count++
+};
+var f = counter.inc;
+f()
+// TypeError: Cannot read property 'count' of undefined
+为什么：
+严格模式下，f在执行时，this为undefined
+猜想：严格模式下，this不能为全局对象

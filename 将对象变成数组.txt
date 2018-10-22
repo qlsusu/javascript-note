@@ -1,0 +1,3 @@
+//要求：参数对象需要含有length属性
+Array.prototype.slice.apply({0: 1, length: 1}) // [1]
+Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]

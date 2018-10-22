@@ -1,0 +1,9 @@
+从obj中提取出来一个值：valueOf函数
+
+使用场景（示例）：
+var obj = {
+  valueOf: function () {
+    return 1;
+  }
+};
+obj + 2 // 3

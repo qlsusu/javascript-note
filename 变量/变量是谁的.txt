@@ -1,0 +1,15 @@
+//全局变量a，是全局对象window的
+var a="a";
+function f(){
+	//函数内部能访问什么变量：局部变量，全局变量，this对象的变量
+	//局部变量a，是全局对象window的
+    var b="b";
+	//this.a是this对象的
+    console.log(this.a)
+};
+var obj={
+    a:"obj.a",
+    c:"c",
+    f:f,
+};
+obj.f(); //obj.a

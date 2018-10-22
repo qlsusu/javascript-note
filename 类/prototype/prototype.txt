@@ -2,7 +2,7 @@
 定义一个变量，其类型为function：var Bean=function(){};
 可以通过Bean来访问 该函数的prototype：Bean.prototype
 	默认为：Object对象
-而prototype.constructor则为 该function：Bean（因为Bean指向了该function）
+而prototype.constructor则为 Bean(其指向了该function对象）
 	
 prototype有什么用：扩展js内建对象，如：
 Bean.prototype.age=12;
@@ -13,3 +13,8 @@ var bean=new Bean();
 
 Object.getPrototypeOf(bean) //为Bean.prototype，也为：bean.__proto__
 Bean.prototype.isPrototypeOf(bean) //true
+
+使用prototype生成的对象.函数 意味着什么：
+[1, 2, 3].slice(0, 1) // [1]
+// 等同于
+Array.prototype.slice.call([1, 2, 3], 0, 1) // [1]

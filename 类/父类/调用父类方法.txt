@@ -1,0 +1,9 @@
+var obj = {};
+// 覆盖掉继承的 hasOwnProperty 方法
+obj.hasOwnProperty = function () {
+  return false;
+};
+obj.hasOwnProperty('toString') // false
+
+// 调用父类方法
+Object.prototype.hasOwnProperty('toString') // true

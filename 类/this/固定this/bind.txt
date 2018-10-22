@@ -1,0 +1,46 @@
+var counter = {
+  count: 0,
+  inc: function () {
+    this.count++;
+  }
+};
+//注意：func !== counter.inc，而是一个新的函数对象
+var func = counter.inc.bind(counter);
+//注意：bind和call/apply的区别：
+	bind：指定一个新的函数对象（函数内部的this已经被指定），后直接调用该函数
+	call/apply：在函数被调用时，需要指定对象（为函数内部的this）
+func();
+counter.count // 1
+
+除了能bind this对象外，还能bind函数参数：
+var add = function (x, y) {
+    console.log(x);	//5
+    console.log(y)	//6 
+}
+var newAdd = add.bind({}, 5);
+newAdd(6)
+
+当bind中第一个参数为null时，函数内部的this对象为 全局对象
+
+使用Function.prototype.call.bind 来表示 xxx.bind
+var f1=function (age,age2) {
+    console.log("hello, function")
+    console.log(this.name)		//bill
+    console.log("age:"+age);	//20
+    console.log("age2:"+age2)	//10
+};
+//虽然f1!==f2，但是通过f2 来可以执行 f1 的函数体
+//第2个参数为f1函数体的this，
+//第3个参数为方法参数1
+//整体相当于：var f2=f1.bind({name:'bill'},20)
+var f2=Function.prototype.call.bind(f1,{name:'bill'},20);
+f2(10);
+
+使用 Function.prototype.call.bind 来表示bind函数
+function f() {
+  console.log(this.v);
+}
+var o = { v: 123 };
+var bind = Function.prototype.call.bind(Function.prototype.bind);
+//第1个参数为 函数对象，第2个参数为 函数内部所使用的this对象
+bind(f, o)() // 123
